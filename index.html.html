@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#0c0b0e">
+<meta name="description" content="Álbum digital de luxo para pets — memórias eternas em um só lugar.">
+
+<!-- OPEN GRAPH (compartilhamento) -->
+<meta property="og:title" content="Álbum Premium · Meu Pet">
+<meta property="og:description" content="Uma coleção luxuosa de memórias do meu melhor amigo.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="imagens/foto-01.jpg">
+
+<title>Álbum Premium · Pet Luxuoso</title>
+
+<link rel="icon" type="image/png" href="imagens/favicon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --ouro: #d4af37;
+  --ouro-claro: #f5e7b2;
+  --ouro-escuro: #a8841f;
+  --preto: #0a0708;
+  --carvao: #141012;
+  --creme: #f5e7d9;
+  --sombra-ouro: 0 0 30px rgba(212, 175, 55, 0.35);
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--preto);
+  background-image: 
+    radial-gradient(circle at 15% 20%, #1f1a1c 0%, transparent 45%),
+    radial-gradient(circle at 85% 80%, #221a1d 0%, transparent 45%),
+    linear-gradient(135deg, #0a0708 0%, #140e10 100%);
+  min-height: 100vh;
+  font-family: 'Montserrat', sans-serif;
+  color: var(--creme);
+  padding: 1.5rem 1rem 6rem;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* ============ PARTÍCULAS DE PATINHAS ============ */
+#particulas {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.patinha {
+  position: absolute;
+  color: rgba(212, 175, 55, 0.18);
+  font-size: 1.2rem;
+  animation: flutuar linear infinite;
+  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.35));
+  will-change: transform;
+}
+
+@keyframes flutuar {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
+
+/* ============ CAPA LUXUOSA ============ */
+.capa {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  position: relative;
+  border-radius: 36px;
+  overflow: hidden;
+  box-shadow: 
+    0 40px 80px -25px rgba(0,0,0,0.95),
+    0 0 0 1px rgba(212, 175, 55, 0.4),
+    0 0 60px rgba(212, 175, 55, 0.15);
+  background: linear-gradient(150deg, #171114 0%, #0d090b 100%);
+  z-index: 2;
+}
+
+.capa::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: 
+    radial-gradient(ellipse at top, rgba(212,175,55,0.12), transparent 60%),
+    linear-gradient(145deg, transparent 30%, rgba(212,175,55,0.06) 100%);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Moldura decorativa dourada */
+.capa::after {
+  content: "";
+  position: absolute;
+  inset: 14px;
+  border: 1px solid rgba(212, 175, 55, 0.35);
+  border-radius: 26px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.capa-conteudo {
+  padding: 4.5rem 2rem 3.8rem;
+  text-align: center;
+  position: relative;
+  z-index: 4;
+}
+
+.capa-selo {
+  display: inline-block;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.68rem;
+  font-weight: 400;
+  letter-spacing: 8px;
+  color: var(--ouro);
+  text-transform: uppercase;
+  padding: 0.5rem 1.5rem;
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  border-radius: 100px;
+  margin-bottom: 1.8rem;
+  background: rgba(212, 175, 55, 0.05);
+  backdrop-filter: blur(6px);
+}
+
+.capa-icone-topo {
+  font-size: 2rem;
+  color: var(--ouro);
+  margin-bottom: 0.8rem;
+  display: block;
+  text-shadow: var(--sombra-ouro);
+  animation: pulsar 3s ease-in-out infinite;
+}
+
+@keyframes pulsar {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.1); opacity: 0.85; }
+}
+
+.capa h1 {
+  font-family: 'Great Vibes', cursive;
+  font-weight: 400;
+  font-size: clamp(3.5rem, 13vw, 7rem);
+  line-height: 1;
+  color: var(--creme);
+  text-shadow: 
+    0 0 25px rgba(212, 175, 55, 0.55),
+    0 4px 10px rgba(0,0,0,0.9);
+  margin-bottom: 0.4rem;
+  word-break: break-word;
+}
+
+.capa .subtitulo-capa {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 3.5vw, 1.3rem);
+  letter-spacing: 2px;
+  color: #c9bfae;
+  margin-top: 0.4rem;
+}
+
+.capa .divisor-ouro {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 1.5rem auto 1.2rem;
+  max-width: 320px;
+}
+
+.capa .divisor-ouro::before,
+.capa .divisor-ouro::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+}
+
+.capa .divisor-ouro i {
+  color: var(--ouro);
+  font-size: 0.9rem;
+}
+
+.capa .contador-premium {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  border-radius: 100px;
+  padding: 0.6rem 1.4rem;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.78rem;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--ouro-claro);
+  backdrop-filter: blur(8px);
+}
+
+.capa .contador-premium i {
+  color: var(--ouro);
+  font-size: 1rem;
+}
+
+.capa .contador-premium strong {
+  color: var(--ouro);
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Frase personalizada */
+.frase-pet {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: clamp(1rem, 3.5vw, 1.35rem);
+  color: #d8cdb9;
+  max-width: 620px;
+  margin: 1.8rem auto 0;
+  line-height: 1.6;
+  padding: 0 1rem;
+  position: relative;
+}
+
+.frase-pet::before {
+  content: "“";
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 3rem;
+  color: var(--ouro);
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 0.5;
+}
+
+/* ============ BARRA DE AÇÕES (COMPARTILHAR) ============ */
+.acoes-topo {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 2rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 0 4px;
+  z-index: 2;
+  position: relative;
+}
+
+.btn-acao {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: rgba(212, 175, 55, 0.08);
+  border: 1px solid rgba(212, 175, 55, 0.45);
+  color: var(--ouro-claro);
+  padding: 0.7rem 1.2rem;
+  border-radius: 100px;
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  backdrop-filter: blur(10px);
+}
+
+.btn-acao:hover {
+  background: var(--ouro);
+  color: var(--preto);
+  border-color: var(--ouro-claro);
+  box-shadow: var(--sombra-ouro);
+  transform: translateY(-2px);
+}
+
+.btn-acao i { font-size: 0.9rem; }
+
+/* ============ TÍTULO DA GALERIA ============ */
+.galeria-titulo {
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin: 0 auto 2rem;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: clamp(1.2rem, 3.5vw, 1.7rem);
+  letter-spacing: 5px;
+  color: var(--ouro);
+  text-transform: uppercase;
+  z-index: 2;
+  position: relative;
+}
+
+.galeria-titulo::before,
+.galeria-titulo::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--ouro), transparent);
+}
+
+.galeria-titulo i { color: var(--ouro); font-size: 0.9em; }
+
+/* ============ GRID DE FOTOS ============ */
+.grid-fotos {
+  width: 100%;
+  max-width: 1100px;
+  margin: 0 auto 3rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  z-index: 2;
+  position: relative;
+}
+
+.foto-card {
+  aspect-ratio: 1 / 1;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  background: #1e181b;
+  box-shadow: 
+    0 15px 30px -10px rgba(0,0,0,0.9),
+    0 0 0 1px rgba(212, 175, 55, 0.25);
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.foto-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 20px;
+  background: linear-gradient(160deg, transparent 55%, rgba(0,0,0,0.75));
+  opacity: 0.85;
+  transition: opacity 0.3s;
+  pointer-events: none;
+}
+
+.foto-card:hover {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 25px 45px -10px #000,
+    0 0 0 2px var(--ouro),
+    0 0 35px rgba(212, 175, 55, 0.5);
+  z-index: 5;
+}
+
+.foto-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.7s ease;
+}
+
+.foto-card:hover img { transform: scale(1.1); }
+
+.foto-card .numero {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  font-size: 0.68rem;
+  font-weight: 600;
+  background: rgba(10, 7, 8, 0.75);
+  backdrop-filter: blur(8px);
+  padding: 4px 10px;
+  border-radius: 40px;
+  color: var(--ouro);
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  letter-spacing: 1.5px;
+  z-index: 3;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.foto-card .legenda {
+  position: absolute;
+  bottom: 10px;
+  left: 12px;
+  right: 12px;
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 0.78rem;
+  color: var(--creme);
+  z-index: 3;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: all 0.35s ease;
+  text-shadow: 0 2px 6px rgba(0,0,0,0.9);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.foto-card:hover .legenda {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.foto-card .placeholder-icone {
+  font-size: 2.5rem;
+  color: rgba(212, 175, 55, 0.25);
+}
+
+/* ============ LIGHTBOX ============ */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(5, 3, 4, 0.97);
+  backdrop-filter: blur(20px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease;
+  padding: 20px;
+}
+
+.lightbox.ativo { opacity: 1; pointer-events: auto; }
+
+.lightbox-conteudo {
+  position: relative;
+  max-width: 90vw;
+  max-height: 82vh;
+  border-radius: 26px;
+  overflow: hidden;
+  box-shadow: 
+    0 50px 90px -20px #000,
+    0 0 0 2px var(--ouro),
+    0 0 60px rgba(212, 175, 55, 0.35);
+  background: #0e0b0c;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lightbox-img {
+  max-width: 90vw;
+  max-height: 82vh;
+  object-fit: contain;
+  display: block;
+  border-radius: 22px;
+}
+
+.lightbox-fechar {
+  position: absolute;
+  top: 20px;
+  right: 22px;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(20, 15, 18, 0.85);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.6);
+  color: var(--creme);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  z-index: 1010;
+}
+
+.lightbox-fechar:hover {
+  background: var(--ouro);
+  color: var(--preto);
+  transform: rotate(90deg);
+}
+
+.lightbox-nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 54px;
+  height: 54px;
+  border-radius: 50%;
+  background: rgba(20, 15, 18, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(212, 175, 55, 0.65);
+  color: var(--creme);
+  font-size: 1.4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.25s;
+  z-index: 1005;
+  user-select: none;
+}
+
+.lightbox-nav:hover {
+  background: var(--ouro);
+  color: var(--preto);
+}
+
+.lightbox-nav.esquerda { left: 20px; }
+.lightbox-nav.direita { right: 20px; }
+
+.lightbox-contador {
+  position: absolute;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--ouro);
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 500;
+  letter-spacing: 4px;
+  background: rgba(0,0,0,0.7);
+  padding: 8px 24px;
+  border-radius: 40px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(212, 175, 55, 0.5);
+  font-size: 0.85rem;
+}
+
+/* ============ PLAYER FLUTUANTE ============ */
+.player-musica {
+  position: fixed;
+  bottom: 22px;
+  right: 22px;
+  z-index: 900;
+  background: rgba(18, 14, 16, 0.92);
+  backdrop-filter: blur(20px);
+  border-radius: 60px;
+  padding: 6px 6px 6px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 
+    0 20px 40px -10px #000,
+    0 0 0 1px rgba(212, 175, 55, 0.55),
+    0 0 30px rgba(212, 175, 55, 0.25);
+  border: 1px solid rgba(212, 175, 55, 0.35);
+}
+
+.player-musica .texto-musica {
+  font-size: 0.7rem;
+  font-weight: 400;
+  letter-spacing: 2.5px;
+  color: #c0b7a8;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.player-musica .texto-musica i {
+  color: var(--ouro);
+  margin-right: 6px;
+  animation: pulsar 2s infinite;
+}
+
+.botao-play {
+  background: var(--ouro);
+  border: none;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--preto);
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.25s;
+  box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
+}
+
+.botao-play:hover {
+  background: var(--ouro-claro);
+  transform: scale(1.08);
+}
+
+/* ============ TOAST DE COMPARTILHAMENTO ============ */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(30px);
+  background: rgba(18, 14, 16, 0.96);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--ouro);
+  border-radius: 50px;
+  padding: 0.9rem 1.6rem;
+  color: var(--ouro-claro);
+  font-family: 'Montserrat', sans-serif;
+  font-size: 0.82rem;
+  letter-spacing: 1.5px;
+  z-index: 2000;
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
+  box-shadow: 0 15px 40px -10px #000, 0 0 25px rgba(212, 175, 55, 0.4);
+  white-space: nowrap;
+}
+
+.toast.ativo {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast i { color: var(--ouro); margin-right: 8px; }
+
+/* ============ RODAPÉ ============ */
+.rodape {
+  width: 100%;
+  max-width: 1100px;
+  margin: 2rem auto 0;
+  text-align: center;
+  padding: 2rem 1rem;
+  border-top: 1px solid rgba(212, 175, 55, 0.2);
+  z-index: 2;
+  position: relative;
+}
+
+.rodape .marca {
+  font-family: 'Cormorant Garamond', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--ouro);
+  letter-spacing: 3px;
+}
+
+.rodape .sub {
+  font-size: 0.7rem;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: #6f6659;
+  margin-top: 0.6rem;
+}
+
+/* ============ RESPONSIVO ============ */
+@media (max-width: 900px) {
+  .grid-fotos { grid-template-columns: repeat(3, 1fr); gap: 12px; }
+}
+
+@media (max-width: 640px) {
+  body { padding: 1rem 0.7rem 6rem; }
+  
+  .capa { border-radius: 26px; }
+  .capa::after { inset: 10px; border-radius: 20px; }
+  .capa-conteudo { padding: 3rem 1.2rem 2.6rem; }
+  .capa-selo { font-size: 0.6rem; letter-spacing: 5px; padding: 0.4rem 1rem; }
+  .capa .contador-premium { font-size: 0.68rem; letter-spacing: 2px; padding: 0.5rem 1rem; }
+  .frase-pet { font-size: 0.98rem; padding: 0 0.5rem; }
+  
+  .grid-fotos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .foto-card { border-radius: 16px; }
+  .foto-card .legenda { font-size: 0.7rem; }
+  .foto-card .numero { font-size: 0.62rem; padding: 3px 8px; }
+  
+  .galeria-titulo { font-size: 1.1rem; letter-spacing: 3px; gap: 10px; }
+  
+  .lightbox-nav { width: 42px; height: 42px; font-size: 1.1rem; }
+  .lightbox-nav.esquerda { left: 8px; }
+  .lightbox-nav.direita { right: 8px; }
+  .lightbox-fechar { width: 42px; height: 42px; font-size: 1.2rem; top: 12px; right: 12px; }
+  .lightbox-contador { font-size: 0.72rem; padding: 6px 16px; bottom: 15px; letter-spacing: 2px; }
+  
+  .player-musica { bottom: 14px; right: 14px; padding: 4px 4px 4px 14px; gap: 8px; }
+  .player-musica .texto-musica { font-size: 0.62rem; letter-spacing: 1.5px; }
+  .botao-play { width: 42px; height: 42px; font-size: 1rem; }
+  
+  .btn-acao { padding: 0.55rem 0.9rem; font-size: 0.65rem; letter-spacing: 1.5px; }
+  .btn-acao .texto-btn { display: none; }
+  .btn-acao i { font-size: 1rem; }
+}
+
+@media (max-width: 380px) {
+  .grid-fotos { gap: 8px; }
+  .capa h1 { font-size: 3rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- PARTÍCULAS DE PATINHAS -->
+<div id="particulas" aria-hidden="true"></div>
+
+<!-- AÇÕES DO TOPO -->
+<div class="acoes-topo">
+  <button class="btn-acao" id="btnCompartilhar" aria-label="Compartilhar álbum">
+    <i class="fas fa-share-alt"></i>
+    <span class="texto-btn">Compartilhar</span>
+  </button>
+</div>
+
+<!-- CAPA PREMIUM -->
+<header class="capa">
+  <div class="capa-conteudo">
+    <span class="capa-icone-topo"><i class="fas fa-paw"></i></span>
+    <div class="capa-selo">Álbum Digital Premium</div>
+    
+    <h1 id="nomePet">Meu Pet</h1>
+    <p class="subtitulo-capa">Uma coleção de amor e memórias</p>
+    
+    <div class="divisor-ouro">
+      <i class="fas fa-paw"></i>
+    </div>
+    
+    <div class="contador-premium">
+      <i class="fas fa-camera-retro"></i>
+      <span><strong id="contadorFotos">40</strong> memórias eternizadas</span>
+    </div>
+    
+    <p class="frase-pet" id="frasePet">
+      Cada olhar, cada abraço, cada momento ao seu lado —<br>
+      são tesouros que guardo no coração.
+    </p>
+  </div>
+</header>
+
+<!-- TÍTULO DA GALERIA -->
+<div class="galeria-titulo">
+  <i class="fas fa-crown"></i>
+  <span>Galeria de Momentos</span>
+  <i class="fas fa-crown"></i>
+</div>
+
+<!-- GRID DE 40 FOTOS -->
+<main class="grid-fotos" id="gridFotos"></main>
+
+<!-- RODAPÉ -->
+<footer class="rodape">
+  <div class="marca">✦ Álbum Premium ✦</div>
+  <div class="sub">Feito com amor · Para sempre</div>
+</footer>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
+  <div class="lightbox-conteudo">
+    <img src="" alt="Foto do pet em tela cheia" class="lightbox-img" id="lightboxImg">
+  </div>
+  <button class="lightbox-fechar" id="lightboxFechar" aria-label="Fechar">
+    <i class="fas fa-times"></i>
+  </button>
+  <button class="lightbox-nav esquerda" id="lightboxAnterior" aria-label="Foto anterior">
+    <i class="fas fa-chevron-left"></i>
+  </button>
+  <button class="lightbox-nav direita" id="lightboxProximo" aria-label="Próxima foto">
+    <i class="fas fa-chevron-right"></i>
+  </button>
+  <div class="lightbox-contador" id="lightboxContador">1 / 40</div>
+</div>
+
+<!-- PLAYER FLUTUANTE -->
+<div class="player-musica">
+  <span class="texto-musica"><i class="fas fa-music"></i> Trilha Sonora</span>
+  <button class="botao-play" id="botaoPlay" aria-label="Tocar música">
+    <i class="fas fa-play" id="iconePlay"></i>
+  </button>
+</div>
+
+<!-- ÁUDIO DA PASTA /musica -->
+<audio id="musicaFundo" loop preload="none">
+  <source src="musica/trilha.mp3" type="audio/mpeg">
+</audio>
+
+<!-- TOAST -->
+<div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastTexto">Link copiado!</span></div>
+
+<script>
+(function() {
+  /* ============================================================
+     ⚙️ CONFIGURAÇÕES PERSONALIZÁVEIS — edite apenas estas linhas
+     ============================================================ */
+  const CONFIG = {
+    nomePet: "Meu Pet",                            // Nome do pet na capa
+    totalFotos: 40,                                 // Total de fotos (máx 40)
+    extensao: "jpg",                                // Extensão das imagens (jpg, png, webp)
+    pastaImagens: "imagens/",                       // Pasta das imagens
+    prefixo: "foto-",                               // Prefixo dos arquivos (foto-01.jpg)
+    frase: "Cada olhar, cada abraço, cada momento ao seu lado —<br>são tesouros que guardo no coração.",
+    frasesGaleria: [                                // Frases rotativas nas legendas das fotos
+      "Puro amor", "Meu companheiro", "Momentos únicos",
+      "Doce sorriso", "Melhor amigo", "Amor infinito",
+      "Olhar sincero", "Alma gêmea", "Risada solta",
+      "Pequeno tesouro", "Coração peludo", "Alegria pura"
+    ]
+  };
+
+  /* ============================================================
+     APLICAR CONFIGURAÇÕES
+     ============================================================ */
+  document.getElementById('nomePet').textContent = CONFIG.nomePet;
+  document.getElementById('contadorFotos').textContent = CONFIG.totalFotos;
+  document.getElementById('frasePet').innerHTML = CONFIG.frase;
+  document.title = `Álbum Premium · ${CONFIG.nomePet}`;
+
+  // Atualizar meta OG
+  document.querySelector('meta[property="og:title"]').setAttribute('content', `Álbum Premium · ${CONFIG.nomePet}`);
+  document.querySelector('meta[property="og:description"]').setAttribute('content', CONFIG.frase.replace(/<br>/g, ' '));
+
+  /* ============================================================
+     GERAR LISTA DE IMAGENS
+     ============================================================ */
+  const imagens = [];
+  for (let i = 1; i <= CONFIG.totalFotos; i++) {
+    const num = String(i).padStart(2, '0');
+    imagens.push(`${CONFIG.pastaImagens}${CONFIG.prefixo}${num}.${CONFIG.extensao}`);
+  }
+
+  /* ============================================================
+     1. PARTÍCULAS DE PATINHAS
+     ============================================================ */
+  function criarParticulas() {
+    const container = document.getElementById('particulas');
+    const total = window.innerWidth < 640 ? 14 : 24;
+    const icones = ['fa-paw', 'fa-paw', 'fa-heart', 'fa-bone'];
+
+    for (let i = 0; i < total; i++) {
+      const p = document.createElement('i');
+      p.className = `fas ${icones[Math.floor(Math.random() * icones.length)]} patinha`;
+      p.style.left = Math.random() * 100 + '%';
+      p.style.animationDuration = (12 + Math.random() * 15) + 's';
+      p.style.animationDelay = (Math.random() * 18) + 's';
+      p.style.fontSize = (0.7 + Math.random() * 1.4) + 'rem';
+      p.style.opacity = (0.08 + Math.random() * 0.18).toString();
+      container.appendChild(p);
+    }
+  }
+  criarParticulas();
+
+  /* ============================================================
+     2. CONSTRUIR GALERIA COM 40 FOTOS
+     ============================================================ */
+  const gridFotos = document.getElementById('gridFotos');
+
+  function construirGaleria() {
+    gridFotos.innerHTML = '';
+    for (let i = 0; i < CONFIG.totalFotos; i++) {
+      const card = document.createElement('div');
+      card.className = 'foto-card';
+      card.dataset.index = i;
+      card.setAttribute('tabindex', '0');
+
+      const img = document.createElement('img');
+      img.src = imagens[i];
+      img.alt = `${CONFIG.nomePet} - Foto ${i + 1}`;
+      img.loading = i < 8 ? 'eager' : 'lazy';
+
+      // Fallback elegante se a imagem não carregar
+      img.onerror = function() {
+        this.onerror = null;
+        this.style.display = 'none';
+        if (!card.querySelector('.placeholder-icone')) {
+          const icone = document.createElement('div');
+          icone.className = 'placeholder-icone';
+          icone.innerHTML = '<i class="fas fa-paw"></i>';
+          card.appendChild(icone);
+        }
+      };
+
+      const numero = document.createElement('span');
+      numero.className = 'numero';
+      numero.textContent = String(i + 1).padStart(2, '0');
+
+      // Legenda rotativa personalizada
+      const legenda = document.createElement('span');
+      legenda.className = 'legenda';
+      legenda.textContent = CONFIG.frasesGaleria[i % CONFIG.frasesGaleria.length];
+
+      card.appendChild(img);
+      card.appendChild(numero);
+      card.appendChild(legenda);
+
+      card.addEventListener('click', () => abrirLightbox(i));
+      card.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          abrirLightbox(i);
+        }
+      });
+
+      gridFotos.appendChild(card);
+    }
+  }
+  construirGaleria();
+
+  /* ============================================================
+     3. LIGHTBOX (TELA CHEIA)
+     ============================================================ */
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxFechar = document.getElementById('lightboxFechar');
+  const lightboxAnterior = document.getElementById('lightboxAnterior');
+  const lightboxProximo = document.getElementById('lightboxProximo');
+  const lightboxContador = document.getElementById('lightboxContador');
+  let indiceAtual = 0;
+
+  function abrirLightbox(index) {
+    indiceAtual = index;
+    atualizarLightbox();
+    lightbox.classList.add('ativo');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function fecharLightbox() {
+    lightbox.classList.remove('ativo');
+    document.body.style.overflow = '';
+  }
+
+  function atualizarLightbox() {
+    lightboxImg.src = imagens[indiceAtual];
+    lightboxImg.alt = `${CONFIG.nomePet} - Foto ${indiceAtual + 1}`;
+    lightboxContador.textContent = `${indiceAtual + 1} / ${CONFIG.totalFotos}`;
+    lightboxImg.onerror = function() {
+      this.onerror = null;
+      this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800" viewBox="0 0 24 24" fill="none" stroke="#d4af37" stroke-width="0.6"><rect width="24" height="24" fill="#1e181b"/><text x="12" y="13.5" font-size="1.4" text-anchor="middle" fill="#d4af37" font-family="sans-serif">🐾 Foto ' + (indiceAtual+1) + '</text></svg>'
+      );
+    };
+  }
+
+  function proximaFoto() {
+    indiceAtual = (indiceAtual + 1) % CONFIG.totalFotos;
+    atualizarLightbox();
+  }
+
+  function fotoAnterior() {
+    indiceAtual = (indiceAtual - 1 + CONFIG.totalFotos) % CONFIG.totalFotos;
+    atualizarLightbox();
+  }
+
+  lightboxFechar.addEventListener('click', fecharLightbox);
+  lightboxAnterior.addEventListener('click', (e) => { e.stopPropagation(); fotoAnterior(); });
+  lightboxProximo.addEventListener('click', (e) => { e.stopPropagation(); proximaFoto(); });
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) fecharLightbox(); });
+  document.querySelector('.lightbox-conteudo').addEventListener('click', (e) => e.stopPropagation());
+
+  // Teclado
+  document.addEventListener('keydown', (e) => {
+    if (!lightbox.classList.contains('ativo')) return;
+    if (e.key === 'Escape') fecharLightbox();
+    if (e.key === 'ArrowRight') proximaFoto();
+    if (e.key === 'ArrowLeft') fotoAnterior();
+  });
+
+  // Suporte a swipe (mobile)
+  let touchStartX = 0;
+  lightbox.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
+  lightbox.addEventListener('touchend', (e) => {
+    const diff = e.changedTouches[0].screenX - touchStartX;
+    if (Math.abs(diff) > 50) {
+      if (diff < 0) proximaFoto();
+      else fotoAnterior();
+    }
+  }, {passive: true});
+
+  /* ============================================================
+     4. MÚSICA DE FUNDO
+     ============================================================ */
+  const musica = document.getElementById('musicaFundo');
+  const botaoPlay = document.getElementById('botaoPlay');
+  const iconePlay = document.getElementById('iconePlay');
+  let tocando = false;
+
+  botaoPlay.addEventListener('click', () => {
+    if (tocando) {
+      musica.pause();
+    } else {
+      musica.play().then(() => {
+        mostrarToast('Reproduzindo trilha sonora 🎵');
+      }).catch((err) => {
+        console.warn('Erro ao tocar áudio:', err);
+        mostrarToast('Adicione musica/trilha.mp3 na pasta!');
+      });
+    }
+  });
+
+  musica.addEventListener('play', () => { iconePlay.className = 'fas fa-pause'; tocando = true; });
+  musica.addEventListener('pause', () => { iconePlay.className = 'fas fa-play'; tocando = false; });
+
+  /* ============================================================
+     5. COMPARTILHAR
+     ============================================================ */
+  const btnCompartilhar = document.getElementById('btnCompartilhar');
+  const toast = document.getElementById('toast');
+  const toastTexto = document.getElementById('toastTexto');
+
+  function mostrarToast(msg) {
+    toastTexto.textContent = msg;
+    toast.classList.add('ativo');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => toast.classList.remove('ativo'), 2800);
+  }
+
+  btnCompartilhar.addEventListener('click', async () => {
+    const shareData = {
+      title: `Álbum Premium · ${CONFIG.nomePet}`,
+      text: `Confira o álbum de memórias do ${CONFIG.nomePet}! 🐾`,
+      url: window.location.href
+    };
+
+    if (navigator.share) {
+      try {
+        await navigator.share(shareData);
+        mostrarToast('Compartilhado com sucesso! ✨');
+      } catch (err) {
+        if (err.name !== 'AbortError') copiarLink();
+      }
+    } else {
+      copiarLink();
+    }
+  });
+
+  function copiarLink() {
+    const url = window.location.href;
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(() => {
+        mostrarToast('Link copiado! Compartilhe com amor 💛');
+      }).catch(() => fallbackCopiar(url));
+    } else {
+      fallbackCopiar(url);
+    }
+  }
+
+  function fallbackCopiar(texto) {
+    const ta = document.createElement('textarea');
+    ta.value = texto;
+    ta.style.position = 'fixed';
+    ta.style.opacity = '0';
+    document.body.appendChild(ta);
+    ta.select();
+    try {
+      document.execCommand('copy');
+      mostrarToast('Link copiado! Compartilhe com amor 💛');
+    } catch (e) {
+      mostrarToast('Copie este link: ' + texto);
+    }
+    document.body.removeChild(ta);
+  }
+
+  /* ============================================================
+     6. EFEITO PARALLAX SUAVE NA CAPA (desktop)
+     ============================================================ */
+  if (window.matchMedia('(min-width: 768px)').matches) {
+    const capa = document.querySelector('.capa');
+    let ticking = false;
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const y = window.scrollY;
+          if (y < 600) {
+            capa.style.transform = `translateY(${y * 0.08}px)`;
+            capa.style.opacity = Math.max(0.4, 1 - y / 800);
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, {passive: true});
+  }
+
+})();
+</script>
+</body>
+</html>
