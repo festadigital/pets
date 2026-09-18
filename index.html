@@ -6,7 +6,6 @@
 <meta name="theme-color" content="#0c0b0e">
 <meta name="description" content="Álbum digital de luxo para pets — memórias eternas em um só lugar.">
 
-<!-- OPEN GRAPH (compartilhamento) -->
 <meta property="og:title" content="Álbum Premium · Meu Pet">
 <meta property="og:description" content="Uma coleção luxuosa de memórias do meu melhor amigo.">
 <meta property="og:type" content="website">
@@ -18,8 +17,11 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Montserrat:wght@200;300;400;500;600;700&family=Great+Vibes&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<!-- Font Awesome carregado sem bloquear a renderização -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"></noscript>
 
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -50,13 +52,14 @@ body {
   position: relative;
 }
 
-/* ============ PARTÍCULAS DE PATINHAS ============ */
+/* ============ PARTÍCULAS (otimizadas) ============ */
 #particulas {
   position: fixed;
   inset: 0;
   pointer-events: none;
   z-index: 1;
   overflow: hidden;
+  contain: strict;         /* OTIMIZAÇÃO: isola renderização */
 }
 
 .patinha {
@@ -66,6 +69,8 @@ body {
   animation: flutuar linear infinite;
   filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.35));
   will-change: transform;
+  transform: translateZ(0); /* OTIMIZAÇÃO: promove layer GPU */
+  backface-visibility: hidden;
 }
 
 @keyframes flutuar {
@@ -75,7 +80,7 @@ body {
   100% { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
 }
 
-/* ============ CAPA LUXUOSA ============ */
+/* ============ CAPA ============ */
 .capa {
   width: 100%;
   max-width: 1100px;
@@ -89,6 +94,7 @@ body {
     0 0 60px rgba(212, 175, 55, 0.15);
   background: linear-gradient(150deg, #171114 0%, #0d090b 100%);
   z-index: 2;
+  contain: layout paint;   /* OTIMIZAÇÃO */
 }
 
 .capa::before {
@@ -102,7 +108,6 @@ body {
   z-index: 2;
 }
 
-/* Moldura decorativa dourada */
 .capa::after {
   content: "";
   position: absolute;
@@ -189,10 +194,7 @@ body {
   background: linear-gradient(90deg, transparent, var(--ouro), transparent);
 }
 
-.capa .divisor-ouro i {
-  color: var(--ouro);
-  font-size: 0.9rem;
-}
+.capa .divisor-ouro i { color: var(--ouro); font-size: 0.9rem; }
 
 .capa .contador-premium {
   display: inline-flex;
@@ -210,18 +212,9 @@ body {
   backdrop-filter: blur(8px);
 }
 
-.capa .contador-premium i {
-  color: var(--ouro);
-  font-size: 1rem;
-}
+.capa .contador-premium i { color: var(--ouro); font-size: 1rem; }
+.capa .contador-premium strong { color: var(--ouro); font-weight: 600; font-size: 1rem; }
 
-.capa .contador-premium strong {
-  color: var(--ouro);
-  font-weight: 600;
-  font-size: 1rem;
-}
-
-/* Frase personalizada */
 .frase-pet {
   font-family: 'Cormorant Garamond', serif;
   font-style: italic;
@@ -246,7 +239,7 @@ body {
   opacity: 0.5;
 }
 
-/* ============ BARRA DE AÇÕES (COMPARTILHAR) ============ */
+/* ============ BARRA DE AÇÕES ============ */
 .acoes-topo {
   width: 100%;
   max-width: 1100px;
@@ -288,7 +281,7 @@ body {
 
 .btn-acao i { font-size: 0.9rem; }
 
-/* ============ TÍTULO DA GALERIA ============ */
+/* ============ TÍTULO GALERIA ============ */
 .galeria-titulo {
   width: 100%;
   max-width: 1100px;
@@ -316,7 +309,7 @@ body {
 
 .galeria-titulo i { color: var(--ouro); font-size: 0.9em; }
 
-/* ============ GRID DE FOTOS ============ */
+/* ============ GRID DE FOTOS (OTIMIZADO) ============ */
 .grid-fotos {
   width: 100%;
   max-width: 1100px;
@@ -326,6 +319,7 @@ body {
   gap: 14px;
   z-index: 2;
   position: relative;
+  contain: layout;
 }
 
 .foto-card {
@@ -335,13 +329,15 @@ body {
   position: relative;
   cursor: pointer;
   background: #1e181b;
+  /* OTIMIZAÇÃO: navegador pula renderização de quem está fora da tela */
+  content-visibility: auto;
+  contain-intrinsic-size: 260px 260px;
   box-shadow: 
     0 15px 30px -10px rgba(0,0,0,0.9),
     0 0 0 1px rgba(212, 175, 55, 0.25);
-  transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  transition: transform 0.4s cubic-bezier(0.2, 0.9, 0.4, 1), box-shadow 0.4s;
+  contain: layout paint;
+  background-image: linear-gradient(135deg, #1e181b, #140e10);
 }
 
 .foto-card::after {
@@ -370,6 +366,8 @@ body {
   object-fit: cover;
   display: block;
   transition: transform 0.7s ease;
+  decoding: async;          /* OTIMIZAÇÃO */
+  background: #1e181b;      /* placeholder visual */
 }
 
 .foto-card:hover img { transform: scale(1.1); }
@@ -410,14 +408,15 @@ body {
   text-overflow: ellipsis;
 }
 
-.foto-card:hover .legenda {
-  opacity: 1;
-  transform: translateY(0);
-}
+.foto-card:hover .legenda { opacity: 1; transform: translateY(0); }
 
 .foto-card .placeholder-icone {
   font-size: 2.5rem;
   color: rgba(212, 175, 55, 0.25);
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 /* ============ LIGHTBOX ============ */
@@ -460,6 +459,7 @@ body {
   object-fit: contain;
   display: block;
   border-radius: 22px;
+  decoding: async;
 }
 
 .lightbox-fechar {
@@ -509,11 +509,7 @@ body {
   user-select: none;
 }
 
-.lightbox-nav:hover {
-  background: var(--ouro);
-  color: var(--preto);
-}
-
+.lightbox-nav:hover { background: var(--ouro); color: var(--preto); }
 .lightbox-nav.esquerda { left: 20px; }
 .lightbox-nav.direita { right: 20px; }
 
@@ -534,7 +530,7 @@ body {
   font-size: 0.85rem;
 }
 
-/* ============ PLAYER FLUTUANTE ============ */
+/* ============ PLAYER ============ */
 .player-musica {
   position: fixed;
   bottom: 22px;
@@ -585,12 +581,9 @@ body {
   box-shadow: 0 5px 15px rgba(212, 175, 55, 0.5);
 }
 
-.botao-play:hover {
-  background: var(--ouro-claro);
-  transform: scale(1.08);
-}
+.botao-play:hover { background: var(--ouro-claro); transform: scale(1.08); }
 
-/* ============ TOAST DE COMPARTILHAMENTO ============ */
+/* ============ TOAST ============ */
 .toast {
   position: fixed;
   bottom: 100px;
@@ -613,11 +606,7 @@ body {
   white-space: nowrap;
 }
 
-.toast.ativo {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-
+.toast.ativo { opacity: 1; transform: translateX(-50%) translateY(0); }
 .toast i { color: var(--ouro); margin-right: 8px; }
 
 /* ============ RODAPÉ ============ */
@@ -655,31 +644,25 @@ body {
 
 @media (max-width: 640px) {
   body { padding: 1rem 0.7rem 6rem; }
-  
   .capa { border-radius: 26px; }
   .capa::after { inset: 10px; border-radius: 20px; }
   .capa-conteudo { padding: 3rem 1.2rem 2.6rem; }
   .capa-selo { font-size: 0.6rem; letter-spacing: 5px; padding: 0.4rem 1rem; }
   .capa .contador-premium { font-size: 0.68rem; letter-spacing: 2px; padding: 0.5rem 1rem; }
   .frase-pet { font-size: 0.98rem; padding: 0 0.5rem; }
-  
   .grid-fotos { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .foto-card { border-radius: 16px; }
   .foto-card .legenda { font-size: 0.7rem; }
   .foto-card .numero { font-size: 0.62rem; padding: 3px 8px; }
-  
   .galeria-titulo { font-size: 1.1rem; letter-spacing: 3px; gap: 10px; }
-  
   .lightbox-nav { width: 42px; height: 42px; font-size: 1.1rem; }
   .lightbox-nav.esquerda { left: 8px; }
   .lightbox-nav.direita { right: 8px; }
   .lightbox-fechar { width: 42px; height: 42px; font-size: 1.2rem; top: 12px; right: 12px; }
   .lightbox-contador { font-size: 0.72rem; padding: 6px 16px; bottom: 15px; letter-spacing: 2px; }
-  
   .player-musica { bottom: 14px; right: 14px; padding: 4px 4px 4px 14px; gap: 8px; }
   .player-musica .texto-musica { font-size: 0.62rem; letter-spacing: 1.5px; }
   .botao-play { width: 42px; height: 42px; font-size: 1rem; }
-  
   .btn-acao { padding: 0.55rem 0.9rem; font-size: 0.65rem; letter-spacing: 1.5px; }
   .btn-acao .texto-btn { display: none; }
   .btn-acao i { font-size: 1rem; }
@@ -689,14 +672,17 @@ body {
   .grid-fotos { gap: 8px; }
   .capa h1 { font-size: 3rem; }
 }
+
+/* Acessibilidade: quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
 </style>
 </head>
 <body>
 
-<!-- PARTÍCULAS DE PATINHAS -->
 <div id="particulas" aria-hidden="true"></div>
 
-<!-- AÇÕES DO TOPO -->
 <div class="acoes-topo">
   <button class="btn-acao" id="btnCompartilhar" aria-label="Compartilhar álbum">
     <i class="fas fa-share-alt"></i>
@@ -704,24 +690,17 @@ body {
   </button>
 </div>
 
-<!-- CAPA PREMIUM -->
 <header class="capa">
   <div class="capa-conteudo">
     <span class="capa-icone-topo"><i class="fas fa-paw"></i></span>
     <div class="capa-selo">Álbum Digital Premium</div>
-    
     <h1 id="nomePet">Meu Pet</h1>
     <p class="subtitulo-capa">Uma coleção de amor e memórias</p>
-    
-    <div class="divisor-ouro">
-      <i class="fas fa-paw"></i>
-    </div>
-    
+    <div class="divisor-ouro"><i class="fas fa-paw"></i></div>
     <div class="contador-premium">
       <i class="fas fa-camera-retro"></i>
       <span><strong id="contadorFotos">40</strong> memórias eternizadas</span>
     </div>
-    
     <p class="frase-pet" id="frasePet">
       Cada olhar, cada abraço, cada momento ao seu lado —<br>
       são tesouros que guardo no coração.
@@ -729,23 +708,19 @@ body {
   </div>
 </header>
 
-<!-- TÍTULO DA GALERIA -->
 <div class="galeria-titulo">
   <i class="fas fa-crown"></i>
   <span>Galeria de Momentos</span>
   <i class="fas fa-crown"></i>
 </div>
 
-<!-- GRID DE 40 FOTOS -->
 <main class="grid-fotos" id="gridFotos"></main>
 
-<!-- RODAPÉ -->
 <footer class="rodape">
   <div class="marca">✦ Álbum Premium ✦</div>
   <div class="sub">Feito com amor · Para sempre</div>
 </footer>
 
-<!-- LIGHTBOX -->
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true">
   <div class="lightbox-conteudo">
     <img src="" alt="Foto do pet em tela cheia" class="lightbox-img" id="lightboxImg">
@@ -762,7 +737,6 @@ body {
   <div class="lightbox-contador" id="lightboxContador">1 / 40</div>
 </div>
 
-<!-- PLAYER FLUTUANTE -->
 <div class="player-musica">
   <span class="texto-musica"><i class="fas fa-music"></i> Trilha Sonora</span>
   <button class="botao-play" id="botaoPlay" aria-label="Tocar música">
@@ -770,27 +744,25 @@ body {
   </button>
 </div>
 
-<!-- ÁUDIO DA PASTA /musica -->
 <audio id="musicaFundo" loop preload="none">
   <source src="musica/trilha.mp3" type="audio/mpeg">
 </audio>
 
-<!-- TOAST -->
 <div class="toast" id="toast"><i class="fas fa-check-circle"></i> <span id="toastTexto">Link copiado!</span></div>
 
 <script>
 (function() {
   /* ============================================================
-     ⚙️ CONFIGURAÇÕES PERSONALIZÁVEIS — edite apenas estas linhas
+     ⚙️ CONFIGURAÇÕES PERSONALIZÁVEIS
      ============================================================ */
   const CONFIG = {
-    nomePet: "Meu Pet",                            // Nome do pet na capa
-    totalFotos: 40,                                 // Total de fotos (máx 40)
-    extensao: "jpg",                                // Extensão das imagens (jpg, png, webp)
-    pastaImagens: "imagens/",                       // Pasta das imagens
-    prefixo: "foto-",                               // Prefixo dos arquivos (foto-01.jpg)
+    nomePet: "Meu Pet",
+    totalFotos: 40,
+    extensao: "jpg",
+    pastaImagens: "imagens/",
+    prefixo: "foto-",
     frase: "Cada olhar, cada abraço, cada momento ao seu lado —<br>são tesouros que guardo no coração.",
-    frasesGaleria: [                                // Frases rotativas nas legendas das fotos
+    frasesGaleria: [
       "Puro amor", "Meu companheiro", "Momentos únicos",
       "Doce sorriso", "Melhor amigo", "Amor infinito",
       "Olhar sincero", "Alma gêmea", "Risada solta",
@@ -805,13 +777,11 @@ body {
   document.getElementById('contadorFotos').textContent = CONFIG.totalFotos;
   document.getElementById('frasePet').innerHTML = CONFIG.frase;
   document.title = `Álbum Premium · ${CONFIG.nomePet}`;
-
-  // Atualizar meta OG
   document.querySelector('meta[property="og:title"]').setAttribute('content', `Álbum Premium · ${CONFIG.nomePet}`);
   document.querySelector('meta[property="og:description"]').setAttribute('content', CONFIG.frase.replace(/<br>/g, ' '));
 
   /* ============================================================
-     GERAR LISTA DE IMAGENS
+     LISTA DE IMAGENS
      ============================================================ */
   const imagens = [];
   for (let i = 1; i <= CONFIG.totalFotos; i++) {
@@ -820,13 +790,28 @@ body {
   }
 
   /* ============================================================
-     1. PARTÍCULAS DE PATINHAS
+     0. PRELOAD DAS PRIMEIRAS 6 (acelera LCP, não bloqueia)
+     ============================================================ */
+  // OTIMIZAÇÃO: adiciona preload só das primeiras visíveis
+  const preCount = 6;
+  for (let i = 0; i < Math.min(preCount, imagens.length); i++) {
+    const link = document.createElement('link');
+    link.rel = 'preload';
+    link.as = 'image';
+    link.href = imagens[i];
+    if (i === 0) link.setAttribute('fetchpriority', 'high');
+    document.head.appendChild(link);
+  }
+
+  /* ============================================================
+     1. PARTÍCULAS (menos e depois do primeiro paint)
      ============================================================ */
   function criarParticulas() {
     const container = document.getElementById('particulas');
-    const total = window.innerWidth < 640 ? 14 : 24;
+    // OTIMIZAÇÃO: 8 no mobile, 16 no desktop
+    const total = window.innerWidth < 640 ? 8 : 16;
     const icones = ['fa-paw', 'fa-paw', 'fa-heart', 'fa-bone'];
-
+    const frag = document.createDocumentFragment(); // OTIMIZAÇÃO
     for (let i = 0; i < total; i++) {
       const p = document.createElement('i');
       p.className = `fas ${icones[Math.floor(Math.random() * icones.length)]} patinha`;
@@ -835,18 +820,24 @@ body {
       p.style.animationDelay = (Math.random() * 18) + 's';
       p.style.fontSize = (0.7 + Math.random() * 1.4) + 'rem';
       p.style.opacity = (0.08 + Math.random() * 0.18).toString();
-      container.appendChild(p);
+      frag.appendChild(p);
     }
+    container.appendChild(frag);
   }
-  criarParticulas();
+  // OTIMIZAÇÃO: só cria depois que a página está pronta
+  if ('requestIdleCallback' in window) {
+    requestIdleCallback(criarParticulas, { timeout: 1500 });
+  } else {
+    setTimeout(criarParticulas, 300);
+  }
 
   /* ============================================================
-     2. CONSTRUIR GALERIA COM 40 FOTOS
+     2. GALERIA — com IntersectionObserver (carrega sob demanda)
      ============================================================ */
   const gridFotos = document.getElementById('gridFotos');
 
   function construirGaleria() {
-    gridFotos.innerHTML = '';
+    const frag = document.createDocumentFragment();
     for (let i = 0; i < CONFIG.totalFotos; i++) {
       const card = document.createElement('div');
       card.className = 'foto-card';
@@ -854,11 +845,23 @@ body {
       card.setAttribute('tabindex', '0');
 
       const img = document.createElement('img');
-      img.src = imagens[i];
+      // OTIMIZAÇÃO PRINCIPAL: as primeiras 6 já vêm com src;
+      // as demais ficam com data-src e o IntersectionObserver
+      // "hidrata" quando chegam perto da tela.
+      if (i < 6) {
+        img.src = imagens[i];
+        img.loading = 'eager';
+        img.fetchPriority = 'high';
+      } else {
+        img.dataset.src = imagens[i];
+        img.loading = 'lazy';
+        img.fetchPriority = 'low';
+      }
       img.alt = `${CONFIG.nomePet} - Foto ${i + 1}`;
-      img.loading = i < 8 ? 'eager' : 'lazy';
+      img.decoding = 'async';       // OTIMIZAÇÃO
+      img.width = 600;              // OTIMIZAÇÃO: reserva espaço
+      img.height = 600;
 
-      // Fallback elegante se a imagem não carregar
       img.onerror = function() {
         this.onerror = null;
         this.style.display = 'none';
@@ -874,7 +877,6 @@ body {
       numero.className = 'numero';
       numero.textContent = String(i + 1).padStart(2, '0');
 
-      // Legenda rotativa personalizada
       const legenda = document.createElement('span');
       legenda.className = 'legenda';
       legenda.textContent = CONFIG.frasesGaleria[i % CONFIG.frasesGaleria.length];
@@ -891,13 +893,44 @@ body {
         }
       });
 
-      gridFotos.appendChild(card);
+      frag.appendChild(card);
     }
+    gridFotos.appendChild(frag);
   }
   construirGaleria();
 
   /* ============================================================
-     3. LIGHTBOX (TELA CHEIA)
+     2.1 INTERSECTION OBSERVER — "hidrata" as fotos sob demanda
+     ============================================================ */
+  // OTIMIZAÇÃO: as fotos fora da tela só baixam quando estão a 300px
+  // de aparecer, evitando 40 downloads simultâneos.
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const img = entry.target.querySelector('img');
+        if (img && img.dataset.src && !img.src) {
+          img.src = img.dataset.src;
+          img.removeAttribute('data-src');
+        }
+        observer.unobserve(entry.target);
+      });
+    }, {
+      rootMargin: '300px 0px',  // começa a carregar 300px antes de aparecer
+      threshold: 0.01
+    });
+
+    document.querySelectorAll('.foto-card').forEach(card => observer.observe(card));
+  } else {
+    // Fallback: navegadores antigos carregam todas direto
+    document.querySelectorAll('.foto-card img[data-src]').forEach(img => {
+      img.src = img.dataset.src;
+      img.removeAttribute('data-src');
+    });
+  }
+
+  /* ============================================================
+     3. LIGHTBOX
      ============================================================ */
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
@@ -920,9 +953,36 @@ body {
   }
 
   function atualizarLightbox() {
-    lightboxImg.src = imagens[indiceAtual];
+    // Mostra primeiro a versão que já está no DOM (pode ser a do card)
+    const cardImg = document.querySelector(`.foto-card[data-index="${indiceAtual}"] img`);
+    if (cardImg && cardImg.src) {
+      lightboxImg.src = cardImg.src;
+    } else {
+      lightboxImg.src = imagens[indiceAtual];
+    }
     lightboxImg.alt = `${CONFIG.nomePet} - Foto ${indiceAtual + 1}`;
     lightboxContador.textContent = `${indiceAtual + 1} / ${CONFIG.totalFotos}`;
+
+    // Carrega a versão "original" em background (mesma URL, mas garante
+    // que está em resolução total se o navegador ainda não decodificou)
+    const original = new Image();
+    original.decoding = 'async';
+    original.onload = () => {
+      if (lightboxImg.alt.includes(`Foto ${indiceAtual + 1}`)) {
+        lightboxImg.src = original.src;
+      }
+    };
+    original.src = imagens[indiceAtual];
+
+    // Pré-carrega vizinhos (navegação fluida)
+    const prox = (indiceAtual + 1) % CONFIG.totalFotos;
+    const ant = (indiceAtual - 1 + CONFIG.totalFotos) % CONFIG.totalFotos;
+    [prox, ant].forEach(idx => {
+      const im = new Image();
+      im.decoding = 'async';
+      im.src = imagens[idx];
+    });
+
     lightboxImg.onerror = function() {
       this.onerror = null;
       this.src = 'data:image/svg+xml;utf8,' + encodeURIComponent(
@@ -947,7 +1007,6 @@ body {
   lightbox.addEventListener('click', (e) => { if (e.target === lightbox) fecharLightbox(); });
   document.querySelector('.lightbox-conteudo').addEventListener('click', (e) => e.stopPropagation());
 
-  // Teclado
   document.addEventListener('keydown', (e) => {
     if (!lightbox.classList.contains('ativo')) return;
     if (e.key === 'Escape') fecharLightbox();
@@ -955,7 +1014,6 @@ body {
     if (e.key === 'ArrowLeft') fotoAnterior();
   });
 
-  // Suporte a swipe (mobile)
   let touchStartX = 0;
   lightbox.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; }, {passive: true});
   lightbox.addEventListener('touchend', (e) => {
@@ -967,7 +1025,7 @@ body {
   }, {passive: true});
 
   /* ============================================================
-     4. MÚSICA DE FUNDO
+     4. MÚSICA
      ============================================================ */
   const musica = document.getElementById('musicaFundo');
   const botaoPlay = document.getElementById('botaoPlay');
@@ -1010,7 +1068,6 @@ body {
       text: `Confira o álbum de memórias do ${CONFIG.nomePet}! 🐾`,
       url: window.location.href
     };
-
     if (navigator.share) {
       try {
         await navigator.share(shareData);
@@ -1051,7 +1108,7 @@ body {
   }
 
   /* ============================================================
-     6. EFEITO PARALLAX SUAVE NA CAPA (desktop)
+     6. PARALLAX SUAVE (desktop)
      ============================================================ */
   if (window.matchMedia('(min-width: 768px)').matches) {
     const capa = document.querySelector('.capa');
